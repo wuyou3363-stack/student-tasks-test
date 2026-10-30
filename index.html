@@ -43,7 +43,7 @@ function convert(rows,doneOnly=false){
 }
 function extraLines(p){
  if(!p.extras)return [p.reading?'完成阅读理解'+p.reading+'篇':'',p.text?'完成课文跟读'+p.text+'篇':'',p.practice?'完成同步练习'+p.practice+'个':'',p.phonetic?'完成音标学习'+p.phonetic+'个':''].filter(Boolean);
- return p.extras.map(x=>({reading:'完成阅读理解'+x.count+'篇',text:'完成课文跟读'+x.count+'篇',practice:'完成同步练习'+x.count+'个',phonetic:'完成音标学习'+(x.count===1?'一个':x.count+'个')})[x.kind]+(x.book&&x.book!==p.book?'（'+x.book+'）':''));
+ return p.extras.map(x=>({reading:'完成阅读理解'+x.count+'篇',text:'完成课文跟读'+x.count+'篇',practice:'完成同步练习'+x.count+'个',phonetic:'完成音标学习'+(x.count===1?'一个':x.count+'个')})[x.kind]+(x.kind!=='practice'&&x.book&&x.book!==p.book?'（'+x.book+'）':''));
 }
 function taskOrder(t){const x=String(t);const module=x.includes('单词')?0:x.includes('词组')?1:x.includes('句子')?2:3;const stage=x.includes('闯关')?2:x.includes('跟读')?0:1;const kind=x.includes('记忆')?0:x.includes('翻译')?1:x.includes('听力')?2:3;return module*100+stage*10+kind}
 function sortTasks(){for(const p of students){for(const g of p.units){g.items.sort((a,b)=>taskOrder(a)-taskOrder(b))}}}
